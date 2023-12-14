@@ -97,7 +97,7 @@ export const Home = () => {
             </div>
             <div className="group-items">
               <div className="paragraps">
-                <p>sunglasses</p>
+                <p>sunglases</p>
               </div>
               <img
                 onClick={() => handleExport("sunglasses")}
