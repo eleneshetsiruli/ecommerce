@@ -1,0 +1,17 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  background-size: contain;
+}
+.login-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.login-inp {
+  display: flex;
+  gap: 5px;
+}

@@ -1,0 +1,283 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.block-items-group {
+  width: 1180px;
+  height: 257px;
+  display: flex;
+
+  margin-top: 20px;
+}
+.group-picture {
+  width: 280px;
+  height: 257px;
+  background-image: url("https://img.freepik.com/free-photo/armchair-green-living-room-with-copy-space_43614-910.jpg?size=626&ext=jpg&ga=GA1.1.946571068.1693428535&semt=ais");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+.group-picture button {
+  width: 123px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px;
+  pad: 0px, 16px, 0px, 16px;
+}
+.group-picture button:hover {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+}
+.group-picture h4 {
+  color: white;
+}
+
+.group-items {
+  width: 223px;
+  height: 127px;
+  color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  gap: 10px;
+}
+.group-items img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.home-body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+.section-sale {
+  width: 1180px;
+  height: 240px;
+  margin-top: 10px;
+  display: flex;
+}
+.sale-layout {
+  width: 895px;
+  height: 235px;
+  display: flex;
+}
+.coundown {
+  width: 198px;
+  height: 113px;
+  border-radius: 4px;
+  display: flex;
+}
+.mini-box {
+  width: 45px;
+  height: 50px;
+  background-color: rgba(96, 96, 96, 1);
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.sale-item {
+  width: 179px;
+  height: 235px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: gray;
+  cursor: pointer;
+}
+.sale-item img {
+  width: 101px;
+}
+.sale-item button {
+  color: red;
+  width: 61px;
+  height: 28px;
+  border-radius: 29px;
+  pad: 3px, 13px, 4px, 13px;
+  background-color: rgba(255, 227, 227, 1);
+  border: none;
+}
+.section-service {
+  width: 1180px;
+  height: 256px;
+  justify-content: center;
+  display: flex;
+  margin-top: 140px;
+  align-items: center;
+
+  gap: 10px;
+}
+.section-box img {
+  width: 280px;
+  height: 120px;
+}
+.section-box {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  width: 280px;
+  height: 200px;
+  position: relative;
+}
+.section-box p {
+  width: 115px;
+  height: 44px;
+}
+.section-box button {
+  border-radius: 50px;
+  width: 45px;
+  height: 45px;
+  background-color: rgba(209, 231, 255, 1);
+  border: 2px rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+}
+.section-box button:hover {
+  background-color: rgb(58, 57, 57);
+  color: white;
+}
+
+.footer-newsletter {
+  width: 517px;
+  height: 113px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.subs {
+  width: 1440px;
+  height: 400px;
+  background: rgba(239, 242, 244, 1);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.email-layout {
+  display: flex;
+  justify-content: center;
+}
+.foot {
+  width: 1440px;
+  height: 224px;
+  padding: 50px;
+  display: flex;
+}
+.brand {
+  width: 276px;
+  height: 157px;
+  display: flex;
+
+  flex-direction: column;
+}
+.foot p {
+  color: gray;
+  font-size: small;
+  width: 200px;
+}
+.foot-icons {
+  display: flex;
+  gap: 10px;
+}
+.about img {
+  width: 100px;
+}
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.small-foot {
+  width: 1440px;
+  height: 10px;
+  border-top: 1px solid rgba(222, 226, 231, 1);
+  display: flex;
+  justify-content: space-around;
+
+  align-items: center;
+}
+.registration {
+  display: flex;
+}
+.left-box {
+  width: 732px;
+  height: 743px;
+  background-color: #3949ab;
+  background-image: url(./images/Group.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+}
+.right-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  gap: 40px;
+}
+
+.register-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.register-inputs input {
+  width: 358px;
+  height: 40px;
+  border-radius: 10px;
+  padding-left: 20px;
+  border: 1px solid rgb(211, 208, 208);
+}
+.hr {
+  display: flex;
+
+  gap: 20px;
+  align-items: center;
+}
+.registration-or {
+  display: flex;
+  gap: 10px;
+}
+.registration-or button {
+  width: 175px;
+  height: 40px;
+  color: #3949ab;
+  border: 1px solid #3949ab;
+  border-radius: 20px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.register-btn {
+  background-color: #3949ab;
+  width: 358px;
+  height: 40px;
+  border-radius: 30px;
+  color: white;
+  border: 1px solid #3949ab;
+}
