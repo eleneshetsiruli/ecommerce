@@ -10,7 +10,6 @@ import {
   InputLabel,
   MenuItem,
   Pagination,
-  Rating,
   Select,
   Tab,
   Tabs,
@@ -21,47 +20,35 @@ import { CartContext } from "../../contexts/CartContextProvider";
 import { AuthContext } from "../../contexts/AuthContext";
 
 export const Products = () => {
-  const [originalProducts, setOriginalProducts] = useState([]);
   const [activePage, setActivePage] = useState(1);
-  const [starValue, setStarValue] = useState("");
-  const [products, SetProducts] = useState([]);
+
+  const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(1);
   const [brands, setBrands] = useState("");
   const [stock, setStock] = useState({
     direction: "",
   });
+  const [hight, setHight] = useState({
+    direction: "",
+  });
   const [Range, setRange] = useState({
     Pricefrom: 0,
-    Priceto: 0,
+    Priceto: 2000,
   });
 
   const [params, setParams] = useState({
     skip: 0,
     limit: 20,
   });
-  const renderProducts = products.length > 0 ? products : originalProducts;
-
-  function handleRaiting() {
-    const filteredRaiting = renderProducts.filter(
-      (el) => el.rating >= starValue
-    );
-
-    SetProducts(filteredRaiting);
-  }
-  useEffect(() => {
-    handleRaiting();
-  }, [starValue]);
-
-  // function handleStock() {
-
-  // }
+  const pageCount = Math.ceil(total / params.limit);
 
   function loadAllProducts() {
     const queryParams = new URLSearchParams(params);
     fetch("https://dummyjson.com/products?" + queryParams)
       .then((res) => res.json())
       .then((data) => {
-        setOriginalProducts(data.products);
-        SetProducts(data.products);
+        setProducts(data.products);
+        setTotal(data.total);
       });
   }
 
@@ -69,72 +56,14 @@ export const Products = () => {
     loadAllProducts();
   }, [params]);
 
-  function addQueryParams() {
-    setParams({ ...params, skip: activePage - 1 * limit });
-  }
-  function handlePriceLow() {
-    const filteredProducts = products.slice().sort((a, b) => a.price - b.price);
-
-    SetProducts(filteredProducts);
-  }
-
-  function handlePriceHight() {
-    const filteredProducts = products.slice().sort((a, b) => b.price - a.price);
-
-    SetProducts(filteredProducts);
-  }
-
-  function handleStockup() {
-    const filteredProducts = products.slice().sort((a, b) => b.stock - a.stock);
-
-    SetProducts(filteredProducts);
-  }
-
-  function handleStockDown() {
-    const filteredProducts = products.slice().sort((a, b) => a.stock - b.stock);
-
-    SetProducts(filteredProducts);
-  }
-
-  useEffect(() => {
-    handlePriceLow();
-  }, []);
-  function handelBrandChange(event) {
-    const selectedBrand = event.target.value;
-    setBrands(selectedBrand);
-    sortByBrand(selectedBrand);
-  }
-  function sortByBrand(brand) {
-    if (brand === "") {
-      SetProducts(originalProducts);
-    } else {
-      const filteredBrand = originalProducts.filter(
-        (elem) => elem.brand === brand
-      );
-      SetProducts(filteredBrand);
-    }
-  }
   function handleRestart() {
-    SetProducts(originalProducts);
     setBrands("");
-    setRange({ ...Range, Pricefrom: 0, Priceto: 0 });
-    setStarValue("");
+    setRange({ ...Range, Pricefrom: 0, Priceto: 2000 });
+
+    setStock({ ...stock, direction: "" });
+
+    loadAllProducts();
   }
-
-  function priceRange() {
-    const range = renderProducts.filter(
-      (el) =>
-        el.price > parseFloat(Range.Pricefrom) &&
-        el.price < parseFloat(Range.Priceto)
-    );
-
-    SetProducts(range);
-    setRange({ ...Range, Prcefrom: 0, Priceto: 0 });
-  }
-
-  useEffect(() => {
-    priceRange();
-  }, [params]);
 
   function handlePageChange(event, newPage) {
     setActivePage(newPage);
@@ -143,7 +72,50 @@ export const Products = () => {
       ...params,
       skip: (newPage - 1) * params.limit,
     });
+
+    loadAllProducts();
   }
+
+  const filteredProducts =
+    Range.Pricefrom !== 0 || Range.Priceto !== 2000 || brands
+      ? products.filter((el) => {
+          if (el.price < Range.Pricefrom || el.price > Range.Priceto) {
+            return false;
+          }
+
+          if (el.brand !== brands && brands) {
+            return false;
+          }
+
+          return true;
+        })
+      : products;
+
+  const sortedData = [...filteredProducts].sort((a, b) => {
+    if (hight.direction === "low") {
+      if (stock.direction === "stockUp") {
+        return a.price - b.price || b.stock - a.stock;
+      } else if (stock.direction === "stockDown") {
+        return a.price - b.price || a.stock - b.stock;
+      } else {
+        return a.price - b.price;
+      }
+    } else if (hight.direction === "hight") {
+      if (stock.direction === "stockUp") {
+        return b.price - a.price || b.stock - a.stock;
+      } else if (stock.direction === "stockDown") {
+        return b.price - a.price || a.stock - b.stock;
+      } else {
+        return b.price - a.price;
+      }
+    } else if (stock.direction === "stockUp") {
+      return b.stock - a.stock || a.price - b.price;
+    } else if (stock.direction === "stockDown") {
+      return a.stock - b.stock || a.price - b.price;
+    } else {
+      return 0;
+    }
+  });
 
   return (
     <div
@@ -168,7 +140,7 @@ export const Products = () => {
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
             value={brands}
-            onChange={handelBrandChange}
+            onChange={(ev) => setBrands(ev.target.value)}
             label="Brands"
           >
             <MenuItem value="Apple">Apple</MenuItem>
@@ -180,8 +152,12 @@ export const Products = () => {
         </FormControl>
 
         <ButtonGroup variant="text" aria-label="text button group">
-          <Button onClick={handlePriceLow}>Price Low</Button>
-          <Button onClick={handlePriceHight}>Price Hight</Button>
+          <Button onClick={() => setHight({ ...hight, direction: "low" })}>
+            Price Low
+          </Button>
+          <Button onClick={() => setHight({ ...hight, direction: "hight" })}>
+            Price Hight
+          </Button>
         </ButtonGroup>
         <div style={{ display: "flex", gap: "30px" }}>
           <TextField
@@ -201,61 +177,23 @@ export const Products = () => {
             onChange={(ev) => setRange({ ...Range, Priceto: ev.target.value })}
           />
         </div>
-        <FormControl sx={{ m: 1, minWidth: 140 }} size="small">
-          <InputLabel
-            style={{ color: "#42a5f5" }}
-            id="demo-select-medium-label"
-          >
-            Raiting
-          </InputLabel>
-          <Select
-            labelId="demo-select-small-label"
-            id="demo-select-small"
-            label="raiting"
-            onChange={(ev) => setStarValue(ev.target.value)}
-            value={starValue}
-          >
-            <MenuItem value={5}>
-              <Rating name="read-only" value={5} readOnly />
-            </MenuItem>
-            <MenuItem value={4}>
-              <Rating name="read-only" value={4} readOnly />
-            </MenuItem>
-            <MenuItem value={3}>
-              <Rating name="read-only" value={3} readOnly />
-            </MenuItem>
-            <MenuItem value={2}>
-              <Rating name="read-only" value={2} readOnly />
-            </MenuItem>
-            <MenuItem value={1}>
-              <Rating name="read-only" value={1} readOnly />
-            </MenuItem>
-          </Select>
-        </FormControl>
+
         <Box sx={{ width: "100%" }}>
           <Tabs
             value={stock.direction}
-            onChange={(ev, newValue) => setStock({ direction: newValue })}
             aria-label="Tabs where selection follows focus"
             selectionFollowsFocus
           >
-            <Tab onClick={handleStockDown} value="down" label="Stock ⬇" />
-            <Tab onClick={handleStockup} value="up" label="Stock ⬆" />
+            <Tab
+              onClick={() => setStock({ ...stock, direction: "stockDown" })}
+              label="Stock ⬇"
+            />
+            <Tab
+              onClick={() => setStock({ ...stock, direction: "stockUp" })}
+              label="Stock ⬆"
+            />
           </Tabs>
         </Box>
-        <button
-          style={{
-            width: "76px",
-            height: "40px",
-            border: "1px solid rgba(222,226,231,1)",
-            color: "#62a9e4",
-            backgroundColor: "white",
-            marginLeft: "50px",
-          }}
-          onClick={priceRange}
-        >
-          Apply
-        </button>
       </div>
 
       <div
@@ -266,13 +204,12 @@ export const Products = () => {
         }}
       >
         <div className="product-body">
-          {products.map((el) => (
+          {sortedData?.map((el) => (
             <ProductCard key={el.id} data={el} />
           ))}
         </div>
         <Pagination
-          onClick={addQueryParams}
-          count={5}
+          count={pageCount}
           color="primary"
           page={activePage}
           onChange={handlePageChange}
