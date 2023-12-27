@@ -75,9 +75,11 @@ export const Cart = () => {
             <input type="text" placeholder="Add coupon" />
             <button>Apply</button>
           </div>
-          <Button variant="contained" color="success">
-            Checkout
-          </Button>
+          <Link to={"checkout"}>
+            <Button variant="contained" color="success">
+              Checkout
+            </Button>
+          </Link>
           <div className="total-box">
             <div className="total-icons">
               <img src="https://freepngimg.com/thumb/logo/127581-logo-american-express-free-hd-image.png" />

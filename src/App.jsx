@@ -12,6 +12,7 @@ import { SimpleProductPage } from "./pages/products/SimpleProductPage";
 import { LayOut } from "./pages/components/LayOut";
 import { Categories } from "./pages/Categories";
 import { About } from "./pages/About";
+import { Payment } from "./payment/Index";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
         </Route>
         <Route path="/" element={<ProtectedRoute />}>
           <Route path="profile" element={<Profile />} />
-          x
+          <Route path="cart/checkout" element={<Payment />} />
           <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>
