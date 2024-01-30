@@ -13,6 +13,7 @@ import { LayOut } from "./pages/components/LayOut";
 import { Categories } from "./pages/Categories";
 import { About } from "./pages/About";
 import { Payment } from "./payment/Index";
+import { Check } from "./pages/Check";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<ProtectedRoute />}>
           <Route path="profile" element={<Profile />} />
           <Route path="cart/checkout" element={<Payment />} />
+          <Route path="check" element={<Check />} />
           <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>

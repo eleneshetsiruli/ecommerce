@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import {
   useStripe,
   useElements,
@@ -18,7 +19,7 @@ const CheckoutForm = () => {
     const result = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "https://example.com/order/123/complete",
+        return_url: "http://localhost:5173/check",
       },
     });
 

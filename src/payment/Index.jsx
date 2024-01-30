@@ -13,12 +13,20 @@ export const Payment = () => {
   const [intent, setIntent] = useState();
   console.log(intent);
 
+  const storedValue = localStorage.getItem("cart");
+  const object = JSON.parse(storedValue);
+
+  const amount = object.reduce((acc, el) => {
+    return el.price * el.qty + acc;
+  }, 0);
+
   useEffect(() => {
     loadIntent();
   }, []);
 
   async function loadIntent() {
-    const res = await CreateIntent();
+    const res = await CreateIntent(amount);
+
     setIntent(res);
   }
 
